@@ -9,7 +9,7 @@ exports.users = function(req, res) {
         if(req.body.nik != "" || req.body.nama != "")
         {
             try{
-                const person = connection.query(`INSERT INTO person (nik, nama, email, foto) VALUES ('${req.body.nik}', '${req.body.nama}', '${req.body.email}', '${req.body.foto}')`, function (err, rows, fields) {
+                const person = connection.query(`INSERT INTO person (nik, nama, email, foto, tgl_rekam) VALUES ('${req.body.nik}', '${req.body.nama}', '${req.body.email}', '${req.body.foto}', '${req.body.tgl_rekam}')`, function (err, rows, fields) {
                     if (err) {
                         response.error(err, res)
                         console.error('err from callback: ' + err.stack);
@@ -24,9 +24,22 @@ exports.users = function(req, res) {
             console.log("NIK/Nama tidak boleh kosong");
             response.error("NIK/Nama tidak boleh kosong", res);
         }
-    } else if(req.body.invoke=='getDataPeserta') {
+    } else if(req.body.invoke=='getDataPesertaBackUp') {
         try{
             connection.query('SELECT * FROM person ORDER BY id DESC LIMIT 1', function (err, rows, fields){
+                if (err) {
+                    response.error(err, res)
+                    console.error('err from callback: ' + err.stack);
+                }
+                response.ok(rows, res);
+            });
+        } catch (err)
+        {
+            console.error('err thrown: ' + err.stack);
+        }
+    } else if(req.body.invoke=='getDataPeserta') {
+        try{
+            connection.query('SELECT * FROM person WHERE tgl_rekam > NOW() - INTERVAL 3 MINUTE ORDER BY tgl_rekam DESC LIMIT 6', function (err, rows, fields){
                 if (err) {
                     response.error(err, res)
                     console.error('err from callback: ' + err.stack);

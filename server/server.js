@@ -2,10 +2,12 @@ var express = require('express'),
     app = express(),
     port = process.env.PORT || 3000,
     bodyParser = require('body-parser'),
-    controller = require('./controller');
+    controller = require('./controller'),
+    cors = require('cors');
 
 app.use(bodyParser.urlencoded({limit: '10mb', extended: true}));
 app.use(bodyParser.json({limit: '10mb', extended: true},));
+app.use(cors())
 
 
 var routes = require('./routes');
