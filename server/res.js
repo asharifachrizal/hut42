@@ -5,7 +5,7 @@ exports.ok = function(values, res) {
 };
 
 exports.insert = function(values, res) {
-    res.status(200).json({"ret" : "0", "msg" : "Insert success"});
+    res.status(200).json({"ret" : "0", "msg" : "Berhasil"});
 };
 
 exports.error = function(err, res) {

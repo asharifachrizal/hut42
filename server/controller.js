@@ -39,7 +39,7 @@ exports.users = function(req, res) {
         }
     } else if(req.body.invoke=='getDataPeserta') {
         try{
-            connection.query('SELECT * FROM person WHERE tgl_rekam > NOW() - INTERVAL 3 MINUTE ORDER BY tgl_rekam DESC LIMIT 6', function (err, rows, fields){
+            connection.query('SELECT * FROM person WHERE tgl_rekam > NOW() - INTERVAL 8 MINUTE ORDER BY tgl_rekam ASC LIMIT 6', function (err, rows, fields){
                 if (err) {
                     response.error(err, res)
                     console.error('err from callback: ' + err.stack);
